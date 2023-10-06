@@ -11,18 +11,7 @@ class Contract extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = [
-        'contract_number',
-        'description',
-        'agreement_file',
-        'company_name',
-        'start_date',
-        'end_date',
-        'completed_date',
-        'type',
-        'salary',
-        'amount',
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'start_date' => 'datetime:d-m-Y',

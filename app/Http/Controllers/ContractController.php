@@ -19,12 +19,15 @@ class ContractController extends Controller
             'start_date' => 'required|date',
             'completed_date' => 'nullable|date',
             'end_date' => 'required|date|after_or_equal:start_date',
-            'amount' => 'required|numeric|min:0.01',
             'description' => 'nullable|string|max:255',
             'type' => 'required|in:inhouse,outsource',
-            'agreement_file' =>  'required|mimes:pdf|max:6048',
+            'file' =>  'required|mimes:pdf|max:6048',
 
         ]);
+
+        $pdfFile = $request->file('file');
+        $storagePath = 'pdfs';
+        $storedFilePath = $pdfFile->store($storagePath);
         if ($request->type == 'inhouse')
         {
             $userData = $request->clientDetails;
@@ -41,15 +44,24 @@ class ContractController extends Controller
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,
                 'client_id' => $user->id,
+                'pm_id' => $request->ProjectManager,
+                'devlead_id' => $request->DevLead,
+                'qalead_id' => $request->QAlead,
+                'agreement_file' =>  $storedFilePath
+
             ]);
 
+        } else {
+            Contract::create([
+                'type' => $request->type,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+                'agreement_file' =>  $storedFilePath,
+                'employee_id' => $request->employee_id
+            ]);
         }
-        $pdfFile = $request->file('agreement_file');
-        $storagePath = 'pdfs';
-        $storedFilePath = $pdfFile->store($storagePath);
+        return response('Contract Created Successfully', 200);
 
-
-        Contract::create($validatedData);
     }
 
     public function details(Request $request)
