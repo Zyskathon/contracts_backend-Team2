@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contract;
+use App\Models\Milestone;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -36,7 +37,7 @@ class ContractController extends Controller
                 'company_name' => $userData['company_name'],
                 'role_id' => 3,
             ]);
-            Contract::create([
+            $contract = Contract::create([
                 'type' => $request->type,
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,
@@ -47,6 +48,15 @@ class ContractController extends Controller
                 'agreement_file' =>  $storedFilePath
 
             ]);
+            foreach ($request->mileStones as $milestone)
+            {
+                Milestone::create([
+                    'name' => $milestone->name,
+                    'start_date' => $milestone->startsat,
+                    'end_date' => $milestone->endsAt,
+                    'contract_id' => $contract->id
+                ]);
+            }
 
         } else {
             Contract::create([
