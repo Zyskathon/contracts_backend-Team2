@@ -33,7 +33,7 @@ Route::group(['controller' => UserController::class], function () {
 Route::group(['middleware' => ['auth:api'], 'controller' => EmployeeController::class], function () {
     Route::post('create/employee', 'store');
     Route::get('employee/{id}', 'show');
-    Route::get('delete/{id}', 'destroy');
+    Route::delete('delete/{id}', 'destroy');
     Route::get('employees', 'index');
 });
 Route::group(['middleware' => ['auth:api'], 'controller' => ContractController::class], function () {
