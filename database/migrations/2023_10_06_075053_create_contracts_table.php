@@ -22,6 +22,9 @@ return new class extends Migration
             $table->date('completed_date')->nullable();
             $table->decimal('amount', 10, 2); // Decimal field with 10 total digits and 2 decimal places
             $table->text('description')->nullable();
+            $table->unsignedBigInteger('client_id')->nullable();
+            // Define foreign key constraints
+            $table->foreign('client_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
