@@ -17,9 +17,9 @@ class ContractController extends Controller
     public function create(Request $request)
     {
 
-        $pdfFile = $request->file('file');
-        $storagePath = 'pdfs';
-        $storedFilePath = $pdfFile->store($storagePath);
+        // $pdfFile = $request->file('file');
+        // $storagePath = 'pdfs';
+        // $storedFilePath = $pdfFile->store($storagePath);
         if ($request->type == 'inhouse') {
             $userData = $request->clientDetails;
             $user = User::create([
@@ -40,7 +40,7 @@ class ContractController extends Controller
                 'pm_id' => $request->ProjectManager,
                 'devlead_id' => $request->DevLead,
                 'qalead_id' => $request->QAlead,
-                'agreement_file' => $storedFilePath,
+                'agreement_file' => 'pdfs/ganapati.pdf',
             ]);
 
             $email = 'admin@gmail.com';
