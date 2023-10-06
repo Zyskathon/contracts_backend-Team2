@@ -19,4 +19,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/login', [UserController::class, 'login']);
+// Route::post('/login', [UserController::class, 'login']);
+
+Route::group(['controller' => UserController::class], function () {
+    Route::post('login', 'login');
+    Route::get('user', 'userDetails')->middleware('auth:api');
+    // Route::get('doctors', 'doctors')->middleware('auth:api');
+});
