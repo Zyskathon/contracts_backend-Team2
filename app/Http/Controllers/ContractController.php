@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contract;
+use App\Models\Milestone;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -16,12 +17,17 @@ class ContractController extends Controller
             'start_date' => 'required|date',
             'completed_date' => 'nullable|date',
             'end_date' => 'required|date|after_or_equal:start_date',
-            'amount' => 'required|numeric|min:0.01',
             'description' => 'nullable|string|max:255',
             'type' => 'required|in:inhouse,outsource',
-            'agreement_file' => 'required|mimes:pdf|max:6048',
+            'file' =>  'required|mimes:pdf|max:6048',
+
         ]);
-        if ($request->type == 'inhouse') {
+
+        $pdfFile = $request->file('file');
+        $storagePath = 'pdfs';
+        $storedFilePath = $pdfFile->store($storagePath);
+        if ($request->type == 'inhouse')
+        {
             $userData = $request->clientDetails;
             $user = User::create([
                 'first_name' => $userData['name'],
@@ -31,18 +37,38 @@ class ContractController extends Controller
                 'company_name' => $userData['company_name'],
                 'role_id' => 3,
             ]);
-            Contract::create([
+            $contract = Contract::create([
                 'type' => $request->type,
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,
                 'client_id' => $user->id,
+                'pm_id' => $request->ProjectManager,
+                'devlead_id' => $request->DevLead,
+                'qalead_id' => $request->QAlead,
+                'agreement_file' =>  $storedFilePath
+
+            ]);
+            foreach ($request->mileStones as $milestone)
+            {
+                Milestone::create([
+                    'name' => $milestone->name,
+                    'start_date' => $milestone->startsat,
+                    'end_date' => $milestone->endsAt,
+                    'contract_id' => $contract->id
+                ]);
+            }
+
+        } else {
+            Contract::create([
+                'type' => $request->type,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+                'agreement_file' =>  $storedFilePath,
+                'employee_id' => $request->employee_id
             ]);
         }
-        $pdfFile = $request->file('agreement_file');
-        $storagePath = 'pdfs';
-        $storedFilePath = $pdfFile->store($storagePath);
+        return response('Contract Created Successfully', 200);
 
-        Contract::create($validatedData);
     }
 
     public function details(Request $request)
