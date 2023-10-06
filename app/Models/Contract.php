@@ -33,4 +33,9 @@ class Contract extends Model
     protected $dates = [
         'deleted_at',
     ];
+
+    public function employee()
+    {
+        return $this->belongsToMany(Employee::class);
+    }
 }

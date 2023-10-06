@@ -10,9 +10,9 @@ class EmployeeController extends Controller
 {
     public function index()
     {
-        // $items = YourModel::all();
+        $employees = Employee::all();
 
-        // return view('your.view', compact('items'));
+        return EmployeeResource::Collection($employees);
     }
 
     public function store(Request $request)

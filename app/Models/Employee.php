@@ -27,4 +27,9 @@ class Employee extends Model
     protected $dates = [
         'deleted_at',
     ];
+
+    public function contract()
+    {
+        return $this->belongsToMany(Contract::class);
+    }
 }

@@ -27,11 +27,11 @@ Route::get('/send-email', [MailController::class, 'sendEmail']);
 Route::group(['controller' => UserController::class], function () {
     Route::post('login', 'login');
     Route::get('user', 'userDetails')->middleware('auth:api');
-    // Route::get('doctors', 'doctors')->middleware('auth:api');
 });
 
 Route::group(['middleware' => ['auth:api'], 'controller' => EmployeeController::class], function () {
     Route::post('create/employee', 'store');
-    Route::get('employe/{id}', 'show');
+    Route::get('employee/{id}', 'show');
     Route::get('delete/{id}', 'destroy');
+    Route::get('employees', 'index');
 });

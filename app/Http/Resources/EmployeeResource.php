@@ -19,7 +19,7 @@ class EmployeeResource extends JsonResource
             'last_name' => $this->last_name,
             'email' => $this->email,
             'phone_number' => $this->phone_number,
-            'hire_date' => $this->hire_date,
+            'hire_date' => $this->hire_date->format('d-m-Y'),
          ];
     }
 }
