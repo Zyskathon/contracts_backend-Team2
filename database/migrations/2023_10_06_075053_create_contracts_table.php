@@ -17,6 +17,7 @@ return new class() extends Migration {
             $table->string('agreement_file')->nullable();
             $table->string('company_name')->nullable();
             $table->string('type');
+            $table->string('status')->default('not started');
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->date('completed_date')->nullable();

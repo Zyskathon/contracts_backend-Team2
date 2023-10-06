@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ContractResource;
 use App\Mail\ContractEmail;
 use App\Models\Contract;
 use App\Models\Employee;
@@ -15,15 +16,6 @@ class ContractController extends Controller
 {
     public function create(Request $request)
     {
-        $validatedData = $request->validate([
-            'contract_number' => 'required|unique:contracts,contract_number', // Unique rule with an exception for update
-            'start_date' => 'required|date',
-            'completed_date' => 'nullable|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            'description' => 'nullable|string|max:255',
-            'type' => 'required|in:inhouse,outsource',
-            'file' => 'required|mimes:pdf|max:6048',
-        ]);
 
         $pdfFile = $request->file('file');
         $storagePath = 'pdfs';
@@ -124,5 +116,11 @@ class ContractController extends Controller
         $contract->employees()->sync($request->employeeIds);
 
         return response(['message' => 'attached successfully'], 201);
+    }
+
+    public function list(Request $request)
+    {
+        $contracts = Contract::get();
+        return ContractResource::collection($contracts);
     }
 }
