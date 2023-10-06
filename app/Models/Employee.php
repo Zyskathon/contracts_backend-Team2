@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Employee extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'first_name',
@@ -22,4 +24,12 @@ class Employee extends Model
         'hire_date' => 'datetime:d-m-Y',
     ];
 
+    protected $dates = [
+        'deleted_at',
+    ];
+
+    public function contract()
+    {
+        return $this->belongsToMany(Contract::class);
+    }
 }
