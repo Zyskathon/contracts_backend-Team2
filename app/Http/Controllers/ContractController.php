@@ -46,19 +46,19 @@ class ContractController extends Controller
             $email = 'admin@gmail.com';
             $ccEmails = Employee::whereIn('id', [$request->ProjectManager, $request->DevLead, $request->QAlead])->pluck('email')->toArray();
 
-            $mailData = [
-                'projectName' => $request->name,
-                'projectDescription' => $request->description,
-                'projectPurpose' => 'Provide a brief description of the project\'s objectives and goals.',
-                'projectManager' => Employee::find($request->ProjectManager)->name,
-                'contractOwners' => 'vyshak, ganpathi',
-                'projectStartDate' => $request->start_date,
-                'projectEndDate' => $request->end_date,
-                'organizationName' => 'ZYSK Technologies',
-            ];
-            Mail::to($email)
-            ->cc($ccEmails)
-            ->send(new ContractEmail($mailData));
+            // $mailData = [
+            //     'projectName' => $request->name,
+            //     'projectDescription' => $request->description,
+            //     'projectPurpose' => 'Provide a brief description of the project\'s objectives and goals.',
+            //     'projectManager' => Employee::find($request->ProjectManager)->name,
+            //     'contractOwners' => 'vyshak, ganpathi',
+            //     'projectStartDate' => $request->start_date,
+            //     'projectEndDate' => $request->end_date,
+            //     'organizationName' => 'ZYSK Technologies',
+            // ];
+            // Mail::to($email)
+            // ->cc($ccEmails)
+            // ->send(new ContractEmail($mailData));
 
             foreach ($request->mileStones as $milestone) {
                 Milestone::create([
@@ -79,18 +79,18 @@ class ContractController extends Controller
                 'employee_id' => $request->employee_id,
             ]);
             $email = 'admin@gmail.com';
-            $mailData = [
-                'projectName' => $request->name,
-                'projectDescription' => $request->description,
-                'projectPurpose' => 'Provide a brief description of the project\'s objectives and goals.',
-                'projectManager' => Employee::find($request->ProjectManager)->name,
-                'contractOwners' => 'vyshak, ganpathi',
-                'projectStartDate' => $request->start_date,
-                'projectEndDate' => $request->end_date,
-                'organizationName' => 'ZYSK Technologies',
-            ];
-            Mail::to($email)
-            ->send(new ContractEmail($mailData));
+            // $mailData = [
+            //     'projectName' => $request->name,
+            //     'projectDescription' => $request->description,
+            //     'projectPurpose' => 'Provide a brief description of the project\'s objectives and goals.',
+            //     'projectManager' => Employee::find($request->ProjectManager)->name,
+            //     'contractOwners' => 'vyshak, ganpathi',
+            //     'projectStartDate' => $request->start_date,
+            //     'projectEndDate' => $request->end_date,
+            //     'organizationName' => 'ZYSK Technologies',
+            // ];
+            // Mail::to($email)
+            // ->send(new ContractEmail($mailData));
         }
 
         return response('Contract Created Successfully', 200);
