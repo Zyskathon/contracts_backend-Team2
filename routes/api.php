@@ -30,12 +30,13 @@ Route::group(['controller' => UserController::class], function () {
     Route::get('user', 'userDetails')->middleware('auth:api');
 });
 
-Route::group(['middleware' => ['auth:api'], 'controller' => EmployeeController::class], function () {
-    Route::post('create/employee', 'store');
+Route::group([ 'controller' => EmployeeController::class], function () {
+    // Route::post('create/employee', 'store');
     Route::get('employee/{id}', 'show');
     Route::delete('delete/{id}', 'destroy');
     Route::get('employees', 'index');
 });
+Route::post('create/employee', [EmployeeController::class,'store']);
 
 Route::get('list/contracts', [ContractController::class, 'list']);
 

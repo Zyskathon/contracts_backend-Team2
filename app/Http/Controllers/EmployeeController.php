@@ -17,6 +17,7 @@ class EmployeeController extends Controller
 
     public function store(Request $request)
     {
+        // return 'hi';
         // Validate and store the new resource
         $validatedData = $request->validate([
             'first_name' => 'required|string|max:255',
