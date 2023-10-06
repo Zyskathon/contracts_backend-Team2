@@ -75,7 +75,7 @@ class ContractController extends Controller
                 'type' => $request->type,
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,
-                'agreement_file' => $storedFilePath,
+                'agreement_file' => 'pdfs/ganapati.pdf',
                 'employee_id' => $request->employee_id,
             ]);
             $email = 'admin@gmail.com';
