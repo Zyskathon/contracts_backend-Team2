@@ -28,8 +28,8 @@ class Employee extends Model
         'deleted_at',
     ];
 
-    public function contract()
+    public function contracts()
     {
-        return $this->belongsToMany(Contract::class);
+        return $this->belongsToMany(Contract::class, 'contract_employees');
     }
 }

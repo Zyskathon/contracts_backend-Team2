@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ContractRequest;
 use App\Models\Contract;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,10 +11,8 @@ class ContractController extends Controller
 {
     public function create(Request $request)
     {
-
         $validatedData = $request->validate([
-
-            'contract_number' => 'required|unique:contracts,contract_number' , // Unique rule with an exception for update
+            'contract_number' => 'required|unique:contracts,contract_number', // Unique rule with an exception for update
             'start_date' => 'required|date',
             'completed_date' => 'nullable|date',
             'end_date' => 'required|date|after_or_equal:start_date',
@@ -32,12 +29,12 @@ class ContractController extends Controller
         {
             $userData = $request->clientDetails;
             $user = User::create([
-                'first_name' => $userData["name"],
+                'first_name' => $userData['name'],
                 // 'last_name' => $userData["last_name"],
-                'email' => $userData["email"],
-                'phone' => $userData["phone"],
-                'company_name' => $userData["company_name"],
-                'role_id' => 3
+                'email' => $userData['email'],
+                'phone' => $userData['phone'],
+                'company_name' => $userData['company_name'],
+                'role_id' => 3,
             ]);
             Contract::create([
                 'type' => $request->type,
@@ -75,6 +72,14 @@ class ContractController extends Controller
         // Create a response with the file content and appropriate headers
         return response($file)
          ->header('Content-Type', $mimeType);
+    }
 
+    public function attachEmployee(Request $request, $contractId)
+    {
+        $contract = Contract::find($contractId); // Replace $contractId with the contract's ID
+
+        $contract->employees()->sync($request->employeeIds);
+
+        return response(['message' => 'attached successfully'], 201);
     }
 }
