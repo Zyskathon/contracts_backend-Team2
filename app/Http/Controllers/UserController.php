@@ -14,7 +14,7 @@ class UserController extends Controller
         $data = Request::create('/oauth/token', 'POST', $request->all());
         $response = app()->handle($data);
         if (!$response->isSuccessful()) {
-            return response('Invalid credentials', 401);
+            return response('Invalid credentials', 400);
         }
         $responseData = json_decode($response->getContent(), true);
         $user = User::where('email', $request->username)->first();

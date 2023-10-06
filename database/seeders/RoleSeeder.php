@@ -22,5 +22,10 @@ class RoleSeeder extends Seeder
             'name' => 'Super Admin'
         ]);
 
+        Role::create([
+            'id' => 3,
+            'name' => 'Client'
+        ]);
+
     }
 }
