@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth:api'], 'controller' => EmployeeController::
     Route::delete('delete/{id}', 'destroy');
     Route::get('employees', 'index');
 });
+
 Route::group(['middleware' => ['auth:api'], 'controller' => ContractController::class], function () {
     Route::post('attach-employee/{contractId}', 'attachEmployee');
 });
