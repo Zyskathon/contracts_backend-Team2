@@ -22,14 +22,14 @@ class ContractController extends Controller
         // $storagePath = 'pdfs';
         // $storedFilePath = $pdfFile->store($storagePath);
         if ($request->type == 'In House') {
-            $userData = $request->clientDetails;
-            $userData = json_decode($request->clientDetails->getContent());
+            // $userData = $request->clientDetails;
+            // $userData = json_decode($request->clientDetails);
             $user = User::create([
-                'first_name' => $userData['name'],
+                'first_name' => $request->client_name,
                 // 'last_name' => $userData["last_name"],
-                'email' => $userData['email'],
-                'phone' => $userData['phone'],
-                'company_name' => $userData['company_name'],
+                'email' => $request->client_email,
+                'phone' => $request->client_phone,
+                'company_name' => $request->company_name,
                 'role_id' => 3,
             ]);
             $contract = Contract::create([
@@ -62,14 +62,14 @@ class ContractController extends Controller
             // ->cc($ccEmails)
             // ->send(new ContractEmail($mailData));
 
-            foreach (json_decode($request->mileStones->getContent()) as $milestone) {
-                Milestone::create([
-                    'name' => $milestone->name,
-                    'start_date' => $milestone->startsat,
-                    'end_date' => $milestone->endsAt,
-                    'contract_id' => $contract->id,
-                ]);
-            }
+            // foreach (json_decode($request->mileStones->getContent()) as $milestone) {
+            //     Milestone::create([
+            //         'name' => $milestone->name,
+            //         'start_date' => $milestone->startsat,
+            //         'end_date' => $milestone->endsAt,
+            //         'contract_id' => $contract->id,
+            //     ]);
+            // }
         } else {
             Contract::create([
                 'contract_number' => $request->name,
