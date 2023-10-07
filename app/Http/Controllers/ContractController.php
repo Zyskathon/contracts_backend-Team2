@@ -102,7 +102,7 @@ class ContractController extends Controller
 
     public function detail(Contract $contractid)
     {
-        return new ContractsREsource($contract);
+        return new ContractsREsource($contractid);
     }
 
     public function details(Request $request)
