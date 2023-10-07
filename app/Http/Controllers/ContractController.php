@@ -129,7 +129,8 @@ class ContractController extends Controller
 
     public function list(Request $request)
     {
-        $contracts = Contract::get();
+
+        $contracts = Contract::where('contract_number', 'like', '%' . $request->search . '%')->orWhere('description', 'like', '%' . $request->search . '%')->get();
         return ContractResource::collection($contracts);
     }
 }
