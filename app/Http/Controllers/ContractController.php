@@ -43,6 +43,7 @@ class ContractController extends Controller
                 'client_id' => $user->id,
                 'pm_id' => $request->ProjectManager,
                 'devlead_id' => $request->DevLead,
+                'status' => 'notstarted',
                 'qalead_id' => $request->QAlead,
                 'agreement_file' => 'pdfs/ganapati.pdf',
             ]);
@@ -79,6 +80,7 @@ class ContractController extends Controller
                 'type' => $request->type,
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,
+                'status' => 'notstarted',
                 'agreement_file' => 'pdfs/ganapati.pdf',
                 'employee_id' => $request->employee_id,
             ]);
@@ -129,7 +131,12 @@ class ContractController extends Controller
 
     public function list(Request $request)
     {
+        if ($request->type) {
+$contracts = Contract::where('status', 'like', '%' . $request->type . '%')->get();
+return ContractResource::collection($contracts);
 
+
+        }
         $contracts = Contract::where('contract_number', 'like', '%' . $request->search . '%')->orWhere('description', 'like', '%' . $request->search . '%')->get();
         return ContractResource::collection($contracts);
     }
