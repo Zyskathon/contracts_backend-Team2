@@ -23,6 +23,7 @@ class ContractController extends Controller
         // $storedFilePath = $pdfFile->store($storagePath);
         if ($request->type == 'In House') {
             $userData = $request->clientDetails;
+            $userData = json_decode($request->clientDetails->getContent());
             $user = User::create([
                 'first_name' => $userData['name'],
                 // 'last_name' => $userData["last_name"],
@@ -61,7 +62,7 @@ class ContractController extends Controller
             // ->cc($ccEmails)
             // ->send(new ContractEmail($mailData));
 
-            foreach ($request->mileStones as $milestone) {
+            foreach (json_decode($request->mileStones->getContent()) as $milestone) {
                 Milestone::create([
                     'name' => $milestone->name,
                     'start_date' => $milestone->startsat,
