@@ -10,6 +10,7 @@ use App\Models\Employee;
 use App\Models\Milestone;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -27,6 +28,7 @@ class ContractController extends Controller
             $user = User::create([
                 'first_name' => $request->client_name,
                 // 'last_name' => $userData["last_name"],
+                'password'          => Hash::make('test1234'),
                 'email' => $request->client_email,
                 'phone' => $request->client_phone,
                 'company_name' => $request->company_name,
