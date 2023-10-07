@@ -96,6 +96,11 @@ class ContractController extends Controller
         return response('Contract Created Successfully', 200);
     }
 
+    // public function detail(Contract $contractid)
+    // {
+
+    // }
+
     public function details(Request $request)
     {
         $filePath = 'pdfs/ganapati.pdf';

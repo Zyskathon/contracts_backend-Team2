@@ -39,6 +39,8 @@ Route::group([ 'controller' => EmployeeController::class], function () {
 Route::post('create/employee', [EmployeeController::class,'store']);
 
 Route::get('list/contracts', [ContractController::class, 'list']);
+Route::get('contracts/{contractid}/', [ContractController::class, 'detail']);
+
 
 Route::group(['middleware' => ['auth:api'], 'controller' => ContractController::class], function () {
     Route::post('attach-employee/{contractId}', 'attachEmployee');

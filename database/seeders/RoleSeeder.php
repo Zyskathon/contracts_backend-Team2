@@ -19,7 +19,7 @@ class RoleSeeder extends Seeder
         ]);
         Role::create([
             'id' => 2,
-            'name' => 'Super Admin'
+            'name' => 'Accountant'
         ]);
 
         Role::create([
