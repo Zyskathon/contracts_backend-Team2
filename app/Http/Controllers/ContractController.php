@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ContractResource;
+use App\Http\Resources\ContractsREsource;
 use App\Mail\ContractEmail;
 use App\Models\Contract;
 use App\Models\Employee;
@@ -20,7 +21,7 @@ class ContractController extends Controller
         // $pdfFile = $request->file('file');
         // $storagePath = 'pdfs';
         // $storedFilePath = $pdfFile->store($storagePath);
-        if ($request->type == 'inhouse') {
+        if ($request->type == 'In House') {
             $userData = $request->clientDetails;
             $user = User::create([
                 'first_name' => $userData['name'],
@@ -96,10 +97,10 @@ class ContractController extends Controller
         return response('Contract Created Successfully', 200);
     }
 
-    // public function detail(Contract $contractid)
-    // {
-
-    // }
+    public function detail(Contract $contractid)
+    {
+        return new ContractsREsource($contract);
+    }
 
     public function details(Request $request)
     {
